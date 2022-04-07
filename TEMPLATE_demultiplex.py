@@ -33,7 +33,7 @@ header = "[Header],,,,,,,,,\
           ,,,,,,,,,\
           [Data],,,,,,,,,"
 
-def createSampleSheet():
+def createSampleSheet(data):
   investigator_name = input("Investigator Name:\n")
   project = input("Name of project (avoid using spaces):\nEx. StaphoriaRun\n")
   today_date= date.today().strftime("%-d/%-m/%y")
@@ -57,5 +57,15 @@ def createSampleSheet():
     tempheader = re.sub('DESC',description, tempheader)
     tempheader = re.sub('READCYCLES',read_cycles, tempheader)
     file.write(tempheader)
+    file.write(data)
 
-createSampleSheet()
+inputsamplesdatapath = input("Path to the file containing the input data.")
+  if ".csv" in inputsamplesdatapath:
+    inputsamples_data = pd.read_csv(inputsamplesdatapath, usecols=['Sample','Shorthand1'])
+  elif ".xlsx" in inputsamplesdatapath:
+    sheetname = input(sheetname)
+    inputsamples_data = pd.read_excel(inputsamplesdatapath, sheetname, usecols=['Sample','Shorthand1'])
+
+
+
+createSampleSheet(csvdata)
