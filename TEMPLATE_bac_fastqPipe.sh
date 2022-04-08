@@ -17,8 +17,8 @@ if [ -d "$HOME/gen-soft/samtools" ] ; then
 fi
 
 ### Name all necessary inputs ###
-folder="~/Documents/NAME_OF_FOLDER"
-# example: "~/Documents/GBS_IV"
+folder="$HOME/Documents/NAME_OF_FOLDER"
+# example: "$HOME/Documents/GBS_IV"
 referencefolder="NAME_OF_REFERENCE_FILE"
 # example: "SA_reference_files" this must match the folder name including necessary files/databases for mlst and/or serotyping.
 bacteria="NAME_OF_SPECIES"
