@@ -16,19 +16,25 @@ if [ -d "$HOME/gen-soft/samtools" ] ; then
 	PATH="$HOME/gen-soft/samtools:$PATH"
 fi
 
-### Name all necessary inputs #examples ###
-folder="~/Documents/NAME_OF_FOLDER" #GBS_IV
+### Name all necessary inputs ###
+folder="~/Documents/NAME_OF_FOLDER"
+# example: "~/Documents/GBS_IV"
 referencefolder="NAME_OF_REFERENCE_FILE"
-bacteria="NAME_OF_SPECIES" #Streptococcus_agalactiae
-stdb="NONE" #replace if needed, like with GBS_serotype.fa
+# example: "SA_reference_files" this must match the folder name including necessary files/databases for mlst and/or serotyping.
+bacteria="NAME_OF_SPECIES"
+# example: "Streptococcus_agalactiae" DO NOT include '.fa' '.fasta' or '.txt' extensions.
+stdb="NONE"
+# example: "GBS_serotype.fa" *INCLUDE ',fa' or '.fasta' extension. IF NOT needed leave as "NONE"
+samples="LIST_OF_SAMPLES" # Copy and paste a ' ' separated list of sample names
+# example: "sample1 sample2 sample3" must match .fastq file names excluding '_R1.fastq.gz' ending.
 
 ### CREATE all necessary output folders ###
 cd "$folder"
-mkdir -p {corr,seeker,denovo,readqc,SPAdeslog,MLST/out,serotype/out,AMR/amrtxt,AMR/amrjson,metaoutput} &&
+mkdir -p corr seeker denovo readqc SPAdeslog MLST/out serotype/out AMR/amrtxt AMR/amrjson metaoutput &&
 
 ### START OF ANALYSIS ###
 # insert string containing all samples separated by a ' ' where 'LIST_OF_SAMPLES' is located #sample1 sample2 sample3 ...
-for X in LIST_OF_SAMPLES ; do
+for X in "$samples" ; do
 		cp ./fastq/"$X"_R1.fastq.gz . &&
 		cp ./fastq/"$X"_R2.fastq.gz . &&
 		
