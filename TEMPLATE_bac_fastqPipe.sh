@@ -92,7 +92,7 @@ for X in "$samples" ; do
 	    		    # srst2 command
 	    	    srst2.py --threads 20 --output "$X" --input_pe "$X"_*.fastq.gz --mlst_db "$bacteria".fasta --mlst_definitions "$bacteria".txt --mlst_delimiter '_' &&
 		        	#cleanup
-    	    	mv "$X"__mlst__"$bacteria"__results.txt ../"$folder"/MLST/out/"$X"_mlst.txt &&
+    	    	mv "$X"__mlst__"$bacteria"__results.txt "$folder"/MLST/out/"$X"_mlst.txt &&
         		rm *.pileup &&
 	         	rm *.bam &&
 	        	echo "	*** Done with MLST for $X"
