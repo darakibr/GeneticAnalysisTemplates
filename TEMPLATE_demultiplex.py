@@ -8,6 +8,7 @@ import numpy as np
 from datetime import date
 
 today = date.today().strftime("%Y%m%d")
+cwd = os.getcwd()
 
 # Read in Illumina IDT labels to identify samples with corresponding index
 idt = pd.read_csv("illumina_IDT.csv")
@@ -50,6 +51,7 @@ def createSampleSheet(data):
         tempheader = re.sub('READCYCLES',read_cycles, tempheader)
         file.write(tempheader)
         file.write(data)
+    return print("Finished creating SampleSheet file as 'SampleSheet_"+project+today+".csv located in "+cwd)
 
 def createcsvfile(idt):
     libprep_path = input("Path to the library prep excel:")
@@ -69,6 +71,7 @@ def createcsvfile(idt):
     final.replace("#N/A",np.nan,inplace=True)
     final.dropna(axis=0, how='any', subset=['I7_Index_ID','index,I5_Index_ID','index2'], inplace=True)
     final.to_csv(today+'csvdata.csv', index=False)
+    return print("Generated data for the SampleSheet and saved as "+today+"csvdata.csv located in "+cwd)
 
 createcsvfile(idt)
 with open(today+'csvdata.csv', 'r') as csvfile:
