@@ -60,10 +60,10 @@ done
     sed "s/,/;/g" "$folder"-annotated.vcf > "$folder"-clean.vcf &&
     sed -i "s/INFO\tFORMAT/Allele|Annotation|Impact|Gene_name|Gene_id|Feature_type|Feature_id|Transcript_biotype\
     |Rank|HGVS.c|HGVS.p|cDNA_pos_length|CDS_pos_length|AA_pos_length|Distance|errors_warnings_info\tFORMAT/g" "$folder"-clean.vcf &&
-    sed -i "s/|/.\t/g" "$folder"-clean.vcf &&
+    sed -i "s/|/\.\t/g" "$folder"-clean.vcf &&
     sed -i "s/\t\tGT/\tGT/g" "$folder"-clean.vcf &&
     sed "/^##/d" "$folder"-clean.vcf > "$folder".csv &&
-    sed -i "s/\.\t/,/g" "$folder".csv && ### > t.csv ###
+    sed -i "s/\t\./,NULL/g" "$folder".csv && ### > t.csv ###
     sed -i "s/\t/,/g" "$folder".csv &&
     sed -i "s/,INFO.*PRIME,/,/g" "$folder".csv &&
     sed -i "s/,;.*GT/,/g" "$folder".csv &&
