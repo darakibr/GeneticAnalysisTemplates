@@ -33,8 +33,20 @@ droprows = list()
 # select isolate columns with over 2% snp count from minimal snp count for removal from consideration
 [dropcols.append(high.columns[n]) for n in range(len(temp)) if high.iloc[-1,n] > temp['HIGHcount'].min()+(len(high)/50)]
 
-
-# FILTER snps rows to only maintain out of suspected PHAGE element snps #
+def imp_df_counts(dfdic, impact=None):
+    dfdic[impact]
+    temp = dfdic[impact].transpose()
+    temp[impact+'count'] = dfdic[impact].count()
+    newdf = temp.transpose()
+    newdf['count'] = temp.count()
+    def filterdf(newdf, dft):
+        dropcols = list()
+        droprows = list()
+        [droprows.append(dft.columns[n]) for n in range(len(newdf)) if dft.iloc[-1,n] < newdf['count'].max()-(len(dft)/15)]
+        # select isolate columns with over 2% snp count from minimal snp count for removal from consideration
+        [dropcols.append(newdf.columns[n]) for n in range(len(dft)) if newdf.iloc[-1,n] > dft['HIGHcount'].min()+(len(newdf)/50)]
+    return newdf
+  # FILTER snps rows to only maintain out of suspected PHAGE element snps #
 #access PHASTER.ca to obtain... OR from created file to build trees...
 
 
