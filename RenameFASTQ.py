@@ -11,39 +11,44 @@ cwd = os.getcwd()
 fastqfolder = cwd+"/fastq/"
 
 def prepilluminafiles(fastqfolder):
-	### Prepare lists to hold files
+	"""Prepare lists to hold files
+	Args:
+		fastqfolder (str): Required, default to None. Name of the folder containing files to be renamed. 
+	Returns:
+		None, but will rename all files in the folder.
+	Raises:
+		Error if no files fastq.gz files found with correct two read naming structure.
+	"""
 	samples = []
 	other_files = []
 	counter = 0
+	def renamefile(filename):
+		"""Renames files, and returns new file name as a string.
+		Args:
+			filename (obj): Required, default to None. Name of the file to be renamed.
+		Returns:
+			filenamestr (str): String with the new name for the file.
+		"""
+		filenamestr = str(filename)
+		filenamestr = re.sub('_S.+?R','_R', file_rn)
+		filenamestr = re.sub('_001','',file_rn)
+		os.rename(fastqfolder+filename, fastqfolder+filenamestr)
+		return filenamestr
 	for file in os.listdir(fastqfolder):
 		try:
 			if file.endswith("R1_001.fastq.gz"):
-				file_rn = str(file)
-				file_rn = re.sub('_S.+?R','_R', file_rn)
-				file_rn = re.sub('_001','',file_rn)
-				os.rename(fastqfolder+file, fastqfolder+file_rn)
+				file_rn = renamefile(file)
 				samples.append(re.sub('_R1.fastq.gz','', file_rn))
-				counter += 1
 			elif file.endswith("R2_001.fastq.gz"):
-				file_rn=str(file)
-				file_rn = re.sub('_S.+?R','_R', file_rn)
-				file_rn = re.sub('_001','',file_rn)
-				os.rename(fastqfolder+file,fastqfolder+file_rn)
-				counter += 1
+				file_rn = renamefile(file)
 			elif file.endswith("_R1.fastq.gz"):
 				file_rn=str(file)
 				samples.append(re.sub('_R1.fastq.gz','',file_rn))
-				counter += 1
-			elif file.endswith("_R2.fastq.gz"):
-				counter += 1
 			else:
 				other_files.append(str(file))
-				counter += 1
 		except Exception as e:
 			raise e
 			print("No files found...")
-	print("Number of files renamed = ",counter)
-	print("Number of unique samples found = ",len(samples))
 	samplesinput = ' '.join(map(str, samples))
 	with open("samples.txt", "w") as file:
 		file.write(samplesinput)
