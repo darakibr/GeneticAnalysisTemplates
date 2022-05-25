@@ -1,5 +1,12 @@
 ### Create a BACTERIAL_reference_files folder
 #Example is for Staphoria Aureus
+import os
+import re
+cwd = os.getcwd()
+if input("Do you wish to change the working directory where REF_folder will be created? [y,n]\nCurrent working directory is: "+str(cwd)) == 'y':
+    cwd = input("Enter new path: ")
+else:
+    print("Using current directory: "+cwd)
 
 class GBS:
     """A Group B Streptococcus (Strep/GBS) genetic sample information class"""
@@ -18,7 +25,10 @@ class Staph:
         self.files = []
     def addfile(self, filename):
         self.files.append(filename)
-    
+
+for isolate in isolatelist:
+    isolate.addfile(isolate+'R1.fastq.gz')
+    isolate.addfile(isolate+'R2.fastq.gz')
 
 # create localDB folder
 if not found
