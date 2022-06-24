@@ -5,15 +5,19 @@
 ### load libraries
 import os
 import re
+import datetime
 
 ### Paths saved to variables
 cwd = os.getcwd()
 fastqfolder = cwd+"/fastq/"
+date = datetime.datetime.now()
+now = date.strftime('%Y%m%d%_%H%M')
 
-def prepilluminafiles(fastqfolder):
+def prepilluminafiles(fastqfolder, exp_name):
 	"""Prepare lists to hold files
 	Args:
-		fastqfolder (str): Required, default to None. Name of the folder containing files to be renamed. 
+		fastqfolder (str): Required, default to None. Name of the folder containing files to be renamed.
+		exp_name (str): Required, defaults to datetime. Name of experiment to be used in followup analysis.
 	Returns:
 		None, but will rename all files in the folder.
 	Raises:
@@ -50,7 +54,11 @@ def prepilluminafiles(fastqfolder):
 			raise e
 			print("No files found...")
 	samplesinput = ' '.join(map(str, samples))
-	with open("samples.txt", "w") as file:
+	try:
+		outputname = exp_name
+	except:
+		outputname = now
+	with open(outputname+'.txt', "w") as file:
 		file.write(samplesinput)
 	print("================ FINISHED RENAMING FASTQ TO PROPER INPUT NAMES ================")
 
