@@ -67,8 +67,7 @@ def filterdf(dfdic, impact=('HIGH','MODERATE','LOW','MODIFIER'), perc=0.8, snpsa
 high = filterdf(imp_df_counts(data_imp,'HIGH'), perc=0.8,snpsadditional=2)
 moderate = filterdf(imp_df_counts(data_imp,'MODERATE'), perc=0.9,snpsadditional=100)
 
-    #access PHASTER.ca to obtain... OR from created file to build trees...
-
+    #access PHASTER.ca to obtain phage elements... OR 'exclusion .txt file' from files to generate phylo trees...
 
 # FILTER mid dataframe to select certain strains #
 data_imp['MODERATE']
