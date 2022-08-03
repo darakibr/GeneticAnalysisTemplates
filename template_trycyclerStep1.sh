@@ -1,11 +1,8 @@
 #!/bin/bash
 
 ### modify these variables ###
-folder="GBS_ONT" #  >>> enter the name you want to give folder, will also dictate output names <<< #
-REFERENCE="REFISOLATE" # >>> enter the reference isolate name (should match .fa file name) <<< #
 threads="34"
 genomesize="2200000"
-current_time=$(date "+%y%m%d.%H%M")
 
 # cwd is: /home/Documents/JCM_SA
 ### This is the first step in TRYCYCLER PIPELINE, will output cluster data from ONT long read data ###
