@@ -1,8 +1,6 @@
 #!/bin/bash
 
 ### modify these variables ###
-folder="ONT" #  >>> enter the name you want to give folder, will also dictate output names <<< #
-REFERENCE="REFISOLATE" # >>> enter the reference isolate name (should match .fa file name) <<< #
 threads="34"
 
 #mkdir hybrid &&
