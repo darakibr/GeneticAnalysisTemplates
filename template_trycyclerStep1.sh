@@ -21,22 +21,24 @@ for X in BCJB1835 BCJB2983 BCJB3343 BCJB3344 BCJB3586 BCJB4361 ; do #For XXXX in
 		trycycler subsample --reads "$X"_1k5perc.fastq --out_dir "$X"_subsets --min_read_depth 75 --count 20 --threads "$threads" &&
 		#Independent assemblies
 		mkdir -p "$X"_assemblies
-		
+		#Creating Canu assemblies
 		for i in 01 05 09 13 17; do
-			canu -p canu -d canu_temp -fast genomeSize="$genome_size" useGrid=false minThreads="$threads" maxThreads="$threads" -nanopore-corrected "$X"_subsets/sample_"$i".fastq -assemble &&
-			cp canu_temp/canu.contigs.fasta "$X"_assemblies/"$X"assembly_"$i".fasta &&
-			rm -rf canu_temp
+			canu -p canu -d canu_temp -fast genomeSize="$genomesize" useGrid=false minThreads="$threads" maxThreads="$threads" -nanopore-corrected "$X"_subsets/sample_"$i".fastq -assemble
+			cp canu_temp/canu.contigs.fasta "$X"_assemblies/"$X"assembly_"$i".fasta
 		done
+		#Creating Flye assemblies
 		for i in 02 06 10 14 18; do
 			flye -g "$genomesize" --nano-corr "$X"_subsets/sample_"$i".fastq --threads "$threads" --out-dir temp_flye &&
 			cp temp_flye/assembly.fasta "$X"_assemblies/"$X"assembly_"$i".fasta &&
 			rm -r temp_flye
 		done
+		#Creating Miniasm assemblies
 		for i in 03 07 11 15 19; do
 			miniasm_and_minipolish.sh  "$X"_subsets/sample_"$i".fastq "$threads" > miniasm_temp.gfa &&
 			any2fasta miniasm_temp.gfa > "$X"_assemblies/"$X"assembly_"$i".fasta &&
 			rm miniasm_temp.gfa
 		done
+		#Creating Raven assemblies
 		for i in 04 08 12 16 20; do
 			raven --threads "$threads" --disable-checkpoints "$X"_subsets/sample_"$i".fastq > "$X"_assemblies/"$X"assembly_"$i".fasta
 		done
